@@ -1,0 +1,13 @@
+version: "3.8"
+services:
+  ts_study:
+    container_name: ts_study
+    build:
+      context: .
+      dockerfile: Dockerfile
+    tty: true
+    stdin_open: true
+    volumes:
+      - ./ts_study:/usr/app:delegated
+    ports:
+      - "8080:8080"
