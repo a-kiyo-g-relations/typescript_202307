@@ -16,7 +16,7 @@ export class Deck {
    * デッキを作るメソッド
    * @return 作成したデッキのデータ
    */
-  makeDeck() {
+  makeDeck(): Card.elements[] {
     // カードの配列を定義
     const cardArray: Card.elements[] = [];
     // マークそれぞれに対し1~13の数字のカードを作成し、配列に入れる
@@ -39,7 +39,6 @@ export class Deck {
 
   /**
    * デッキをシャッフルするメソッド
-   * @return シャッフルしたカードの配列（デッキ）
    */
   shuffleDeck() {
     this.cardMembers = this.cardMembers.sort((a, b) => 0.5 - Math.random());
