@@ -6,13 +6,13 @@ export enum SymbolMark {
   DIAMOND,
 }
 // カード1枚の型を作成
-export type cardElement = {
+export type CardElement = {
   num: number;
   symbol: SymbolMark;
 };
 // カード1枚分のデータを定義するクラス
 export class Card {
-  private card: cardElement;
+  private card: CardElement;
 
   constructor(num: number, symbol: SymbolMark) {
     this.card = { num, symbol };
