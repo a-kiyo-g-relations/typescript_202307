@@ -9,6 +9,7 @@ export class Deck {
 
   constructor() {
     this.cardMembers = this.makeDeck();
+    this.shuffleDeck();
   }
 
   /**
@@ -16,19 +17,16 @@ export class Deck {
    * @return 作成したデッキのデータ
    */
   makeDeck() {
-    // マークの配列を取得
-    const symbolArray: Card.SymbolMark[] = Card.SYMBOL_MARKS;
     // カードの配列を定義
     const cardArray: Card.elements[] = [];
     // マークそれぞれに対し1~13の数字のカードを作成し、配列に入れる
-    symbolArray.forEach((symbol) => {
+    Card.SYMBOL_MARKS.forEach((symbol) => {
       for (let i = Card.MIN_NUMBER; i <= Card.MAX_NUMBER; i++) {
         const card = { num: i, symbol: symbol };
         cardArray.push(card);
       }
     });
-    const shffledDeck = this.shuffleDeck(cardArray);
-    return shffledDeck;
+    return cardArray;
   }
 
   /**
@@ -43,8 +41,7 @@ export class Deck {
    * デッキをシャッフルするメソッド
    * @return シャッフルしたカードの配列（デッキ）
    */
-  shuffleDeck(cardArray: Card.elements[]): Card.elements[] {
-    cardArray.sort((a, b) => 0.5 - Math.random());
-    return cardArray;
+  shuffleDeck() {
+    this.cardMembers = this.cardMembers.sort((a, b) => 0.5 - Math.random());
   }
 }

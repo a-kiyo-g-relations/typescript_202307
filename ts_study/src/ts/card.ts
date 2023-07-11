@@ -10,7 +10,7 @@ export namespace Card {
   /**
    * マークの型を定義
    */
-  export type SymbolMark = string;
+  type SymbolMark = string;
   /**
    * マークの配列を定義
    */
