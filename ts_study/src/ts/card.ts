@@ -8,7 +8,7 @@ export enum SymbolMark {
 // カード1枚の型を作成
 export type CardElement = {
   // カードの数字
-  num: number;
+  readonly num: number;
   // マーク
-  symbol: SymbolMark;
+  readonly symbol: SymbolMark;
 };
