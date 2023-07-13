@@ -1,4 +1,4 @@
-import { MyCards } from "./myCards";
+import { InHands } from "./inHands";
 // 結果に関する名前空間
 export namespace Result {
   export enum Status {
@@ -25,12 +25,12 @@ export class Game {
    * @param blackJack ナチュラルブラックジャックかの判定
    * @returns 手札のステータスを返す/同時にリザルトメッセージもセットする
    */
-  static judgeByMyCards(MyCards: MyCards): Result.Status {
-    if (MyCards.blackJack()) {
+  static judgeByCards(InHands: InHands): Result.Status {
+    if (InHands.blackJack()) {
       return Result.Status.JACK;
-    } else if (MyCards.culcNumber() === this.BLACK_JACK) {
+    } else if (InHands.culcNumber() === this.BLACK_JACK) {
       return Result.Status.EXACT;
-    } else if (MyCards.culcNumber() > this.BLACK_JACK) {
+    } else if (InHands.culcNumber() > this.BLACK_JACK) {
       return Result.Status.OVER;
     }
     return Result.Status.UNDER;

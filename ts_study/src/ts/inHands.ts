@@ -1,9 +1,9 @@
 import { Card } from "./card";
-export class MyCards {
+export class InHands {
   /**
    * 手札を定義する変数
    */
-  private myCards: Card.elements[] = [];
+  private cards: Card.elements[] = [];
   /**
    * エースを定義する
    */
@@ -17,13 +17,13 @@ export class MyCards {
    * @param card デッキから引いたカード1枚のデータ
    */
   addCard(card: Card.elements) {
-    this.myCards.push(card);
+    this.cards.push(card);
   }
   /**
    * 現在の手札を返すメソッド
    */
-  getMyCards(): Card.elements[] {
-    return this.myCards;
+  getCards(): Card.elements[] {
+    return this.cards;
   }
   /**
    * 手札のカードの合計を出すメソッド
@@ -35,7 +35,7 @@ export class MyCards {
     // 合計値を定義
     let total = 0;
     // 手札1枚ずつの判定
-    this.myCards.forEach((card) => {
+    this.cards.forEach((card) => {
       if (card.num === this.ACE) {
         howManyAce++;
       } else if (card.num > this.HIGH_CARD) {
@@ -61,7 +61,7 @@ export class MyCards {
     let ace = false;
     let jack = false;
     // 手札1枚ずつの判定
-    this.myCards.forEach((card) => {
+    this.cards.forEach((card) => {
       if (card.num === this.ACE) {
         ace = true;
       } else if (card.num >= this.HIGH_CARD) {
