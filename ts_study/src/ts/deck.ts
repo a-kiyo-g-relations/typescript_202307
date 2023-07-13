@@ -9,7 +9,7 @@ export class Deck {
 
   constructor() {
     this.cardMembers = this.makeDeck();
-    this.shuffleDeck();
+    this.shuffle();
   }
 
   /**
@@ -28,7 +28,6 @@ export class Deck {
     });
     return cardArray;
   }
-
   /**
    * デッキ1組のデータを返すメソッド
    * @returns デッキ1組のデータを返す
@@ -36,11 +35,17 @@ export class Deck {
   getCardMembers(): Card.elements[] {
     return this.cardMembers;
   }
-
   /**
    * デッキをシャッフルするメソッド
    */
-  shuffleDeck() {
+  private shuffle() {
     this.cardMembers = this.cardMembers.sort((a, b) => 0.5 - Math.random());
+  }
+  /**
+   * デッキからカードを1枚引く（配列の先頭を切り取る）メソッド
+   * @returns デッキの先頭の1枚
+   */
+  drawCard(): Card.elements | undefined {
+    return this.cardMembers.shift();
   }
 }
