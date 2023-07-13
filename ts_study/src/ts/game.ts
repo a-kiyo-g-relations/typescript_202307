@@ -19,9 +19,8 @@ export namespace Game {
     static BLACK_JACK_NUMBER = 21;
     /**
      * 手札の合計値からプレイヤーのステータスを判定するメソッド
-     * @param totalNum 手札の合計値
-     * @param blackJack ナチュラルブラックジャックかの判定
-     * @returns 手札のステータスを返す/同時にリザルトメッセージもセットする
+     * @param inHands 手札のクラス
+     * @returns 手札のステータスを返す
      */
     static judgeByCards(inHands: InHands): Game.Status {
       if (inHands.isBlackJack()) {

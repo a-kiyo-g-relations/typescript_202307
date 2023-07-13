@@ -27,7 +27,6 @@ export class InHands {
   }
   /**
    * 手札のカードの合計を出すメソッド
-   * @param myCards 手札の配列
    * @returns 手札の合計値を返す
    */
   culcNumber(): number {
@@ -54,7 +53,6 @@ export class InHands {
   }
   /**
    * ナチュラルブラックジャックの判定をするメソッド
-   * @param myCards 手札
    * @returns ナチュラルブラックジャックの場合true
    */
   isBlackJack(): boolean {
