@@ -43,4 +43,11 @@ export class Deck {
   shuffleDeck() {
     this.cardMembers = this.cardMembers.sort((a, b) => 0.5 - Math.random());
   }
+  /**
+   * デッキからカードを1枚引く（配列の先頭を切り取る）メソッド
+   * @returns デッキの先頭の1枚
+   */
+  drawCardFromDeck(): Card.elements | undefined {
+    return this.cardMembers.shift();
+  }
 }
