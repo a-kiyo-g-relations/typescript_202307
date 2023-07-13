@@ -31,13 +31,13 @@ export class InHands {
    * @returns 手札の合計値を返す
    */
   culcNumber(): number {
-    let howManyAce = 0;
+    let numberOfAce = 0;
     // 合計値を定義
     let total = 0;
     // 手札1枚ずつの判定
     this.cards.forEach((card) => {
       if (card.num === this.ACE) {
-        howManyAce++;
+        numberOfAce++;
       } else if (card.num > this.HIGH_CARD) {
         total += this.HIGH_CARD;
       } else {
@@ -45,30 +45,31 @@ export class InHands {
       }
     });
     // 合計と1の枚数が11未満なら、1の枚数に10を足す（11と判断されるaceの数は1枚以上にはならないから）
-    if (total + howManyAce <= 11) {
-      total += howManyAce + this.HIGH_CARD; //HIGH_CARD === 10
+    if (total + numberOfAce <= 11) {
+      total += numberOfAce + this.HIGH_CARD; //HIGH_CARD === 10
     } else {
-      total += howManyAce;
+      total += numberOfAce;
     }
     return total;
   }
   /**
+   * ナチュラルブラックジャックの判定をするメソッド
    * @param myCards 手札
-   * @returns ナチュラルブラックジャックを判定するboolean
+   * @returns ナチュラルブラックジャックの場合true
    */
-  blackJack(): boolean {
+  isBlackJack(): boolean {
     // エースとハイカードの有無をbooleanで定義
-    let ace = false;
-    let jack = false;
+    let hasAce = false;
+    let hasHighCard = false;
     // 手札1枚ずつの判定
     this.cards.forEach((card) => {
       if (card.num === this.ACE) {
-        ace = true;
+        hasAce = true;
       } else if (card.num >= this.HIGH_CARD) {
-        jack = true;
+        hasHighCard = true;
       }
     });
-    if (ace && jack) {
+    if (hasAce && hasHighCard) {
       return true;
     }
     return false;
