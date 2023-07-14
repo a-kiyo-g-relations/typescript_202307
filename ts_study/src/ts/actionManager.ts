@@ -68,40 +68,38 @@ export namespace ActionManager {
   }
 
   /**
-   * 押されたボタンによる処理の分岐
+   * ボタンにクリックアクションを付与する
    */
   export function initializeButton() {
     const reloadButton = getElement(ButtonId.RELOAD_BUTTON);
     const hitButton = getElement(ButtonId.HIT_BUTTON);
     const stayButton = getElement(ButtonId.STAY_BUTTON);
 
-    reloadButton.onclick = reload;
+    reloadButton.onclick = finishGame;
     stayButton.onclick = stay;
     hitButton.onclick = hit;
   }
 
-  /** ページリロード（ゲームリセット） */
-  function reload() {
-    location.reload();
+  /** ゲーム終了 */
+  function finishGame() {
+    finish();
   }
 
-  /** 今の手札で終了しリロードする */
+  /** 今の手札で終了する */
   function stay() {
-    alert(inHands.culcNumber() + "で終了です。");
-    location.reload();
+    Disp.alertWrapp(inHands);
+    finish();
   }
 
   /** ゲームを続ける（もう一枚引く） */
   function hit() {
-    continueGame();
-  }
-
-  /**
-   * ゲームを続ける（ヒットボタンを押す）時に呼ばれるメソッド
-   */
-  function continueGame() {
     drawCard();
     displayCard();
     displayStatus();
+  }
+
+  /** ゲームを終了するメソッド */
+  function finish() {
+    location.reload();
   }
 }

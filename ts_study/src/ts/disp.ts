@@ -83,26 +83,53 @@ export namespace Disp {
     const status = Game.MainLogic.judgeByCards(inHands);
     switch (status) {
       case Game.Status.JACK:
-        messageElement.textContent = "ブラックジャックです。";
-        reloadElement.style.display = "block";
-        buttonAreaElement.style.display = "none";
+        setStatusMessage("ブラックジャックです。");
+        toggleDisplayButtons(true);
         break;
       case Game.Status.EXACT:
-        messageElement.textContent = "21です。";
-        reloadElement.style.display = "block";
-        buttonAreaElement.style.display = "none";
+        setStatusMessage("21です。");
+        toggleDisplayButtons(true);
         break;
       case Game.Status.OVER:
-        messageElement.textContent = "バーストです。";
-        reloadElement.style.display = "block";
-        buttonAreaElement.style.display = "none";
+        setStatusMessage("バーストです。");
+        toggleDisplayButtons(true);
         break;
       case Game.Status.UNDER:
-        reloadElement.style.display = "none";
-        buttonAreaElement.style.display = "block";
+        toggleDisplayButtons(false);
         break;
       default:
         throw new Error("ゲームステータスが返ってきません。");
     }
+  }
+
+  /**
+   * ボタンの表示/非表示を切り替えるメソッド
+   */
+  function toggleDisplayButtons(enableFinish: boolean) {
+    const reloadElement = getElement(ElementId.RELOAD_BUTTON);
+    const buttonAreaElement = getElement(ElementId.BUTTON_AREA);
+    if (enableFinish) {
+      reloadElement.style.display = "block";
+      buttonAreaElement.style.display = "none";
+    } else {
+      reloadElement.style.display = "none";
+      buttonAreaElement.style.display = "block";
+    }
+  }
+
+  /**
+   * ステータスメッセージをセットするメソッド
+   */
+  function setStatusMessage(message: string) {
+    const messageElement = getElement(ElementId.STATUS_MESSAGE);
+    messageElement.textContent = message;
+  }
+
+  /**
+   * STAYでゲーム終了した際に出るアラート
+   * @param inHands　手札クラス
+   */
+  export function alertWrapp(inHands: InHands) {
+    alert(inHands.culcNumber() + "で終了する。");
   }
 }
