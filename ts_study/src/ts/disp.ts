@@ -1,4 +1,5 @@
 import { Card } from "./card";
+import { Game } from "./game";
 import { InHands } from "./inHands";
 /**
  * 表示に関する処理群
@@ -12,6 +13,12 @@ export namespace Disp {
     export const CARD_IN_HANDS = "cardInHands";
     /** 手札の合計 */
     export const TOTAL_NUMBER = "totalNumber";
+    /** ステータスメッセージ */
+    export const STATUS_MESSAGE = "statusMessage";
+    /** リロードボタン */
+    export const RELOAD_BUTTON = "reloadButton";
+    /** ヒットボタンとステイボタンの表示エリア */
+    export const BUTTON_AREA = "buttonArea";
   }
 
   /**
@@ -62,5 +69,63 @@ export namespace Disp {
   export function totalNum(inHands: InHands) {
     const targetElement = getElement(ElementId.TOTAL_NUMBER);
     targetElement.textContent = inHands.culcNumber().toString();
+  }
+
+  /**
+   * ステータスメッセージとボタンの表示を更新する
+   * @param inHands 手札クラス
+   */
+  export function updateStatus(inHands: InHands) {
+    const status = Game.MainLogic.judgeByCards(inHands);
+    switch (status) {
+      case Game.Status.JACK:
+        setStatusMessage("ブラックジャックです。");
+        toggleDisplayButtons(true);
+        break;
+      case Game.Status.EXACT:
+        setStatusMessage("21です。");
+        toggleDisplayButtons(true);
+        break;
+      case Game.Status.OVER:
+        setStatusMessage("バーストです。");
+        toggleDisplayButtons(true);
+        break;
+      case Game.Status.UNDER:
+        toggleDisplayButtons(false);
+        break;
+      default:
+        throw new Error("ゲームステータスが返ってきません。");
+    }
+  }
+
+  /**
+   * ボタンの表示/非表示を切り替えるメソッド
+   */
+  function toggleDisplayButtons(enableFinish: boolean) {
+    const reloadElement = getElement(ElementId.RELOAD_BUTTON);
+    const buttonAreaElement = getElement(ElementId.BUTTON_AREA);
+    if (enableFinish) {
+      reloadElement.style.display = "block";
+      buttonAreaElement.style.display = "none";
+    } else {
+      reloadElement.style.display = "none";
+      buttonAreaElement.style.display = "block";
+    }
+  }
+
+  /**
+   * ステータスメッセージをセットするメソッド
+   */
+  function setStatusMessage(message: string) {
+    const messageElement = getElement(ElementId.STATUS_MESSAGE);
+    messageElement.textContent = message;
+  }
+
+  /**
+   * STAYでゲーム終了した際に出るアラート
+   * @param inHands　手札クラス
+   */
+  export function alertWrapp(inHands: InHands) {
+    alert(inHands.culcNumber() + "で終了する。");
   }
 }

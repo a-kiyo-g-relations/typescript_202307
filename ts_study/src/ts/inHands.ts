@@ -56,20 +56,21 @@ export class InHands {
    * @returns ナチュラルブラックジャックの場合true
    */
   isBlackJack(): boolean {
-    // エースとハイカードの有無をbooleanで定義
-    let hasAce = false;
-    let hasHighCard = false;
-    // 手札1枚ずつの判定
-    this.cards.forEach((card) => {
-      if (card.num === this.ACE) {
-        hasAce = true;
-      } else if (card.num >= this.HIGH_CARD) {
-        hasHighCard = true;
-      }
-    });
-    if (hasAce && hasHighCard) {
-      return true;
+    // 手札が2枚がじゃなければfalse
+    if (this.cards.length !== 2) {
+      return false;
     }
-    return false;
+    // エースがなければfalse
+    const hasAce = this.cards.some((card) => card.num === this.ACE);
+    if (!hasAce) {
+      return false;
+    }
+    // ハイカードがなければfalse
+    const hasHighCard = this.cards.some((card) => card.num >= this.HIGH_CARD);
+    if (!hasHighCard) {
+      return false;
+    }
+
+    return true;
   }
 }
