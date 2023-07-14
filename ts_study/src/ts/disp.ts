@@ -1,4 +1,5 @@
 import { Card } from "./card";
+import { Game } from "./game";
 import { InHands } from "./inHands";
 /**
  * 表示に関する処理群
@@ -12,6 +13,12 @@ export namespace Disp {
     export const CARD_IN_HANDS = "cardInHands";
     /** 手札の合計 */
     export const TOTAL_NUMBER = "totalNumber";
+    /** ステータスメッセージ */
+    export const STATUS_MESSAGE = "statusMessage";
+    /** リロードボタン */
+    export const RELOAD_BUTTON = "reloadButton";
+    /** ヒットボタンとステイボタンの表示エリア */
+    export const BUTTON_AREA = "buttonArea";
   }
 
   /**
@@ -62,5 +69,40 @@ export namespace Disp {
   export function totalNum(inHands: InHands) {
     const targetElement = getElement(ElementId.TOTAL_NUMBER);
     targetElement.textContent = inHands.culcNumber().toString();
+  }
+
+  /**
+   * ステータスメッセージとボタンの表示を更新する
+   * @param inHands 手札クラス
+   */
+  export function updateStatus(inHands: InHands) {
+    const messageElement = getElement(ElementId.STATUS_MESSAGE);
+    const reloadElement = getElement(ElementId.RELOAD_BUTTON);
+    const buttonAreaElement = getElement(ElementId.BUTTON_AREA);
+
+    const status = Game.MainLogic.judgeByCards(inHands);
+    switch (status) {
+      case Game.Status.JACK:
+        messageElement.textContent = "ブラックジャックです。";
+        reloadElement.style.display = "block";
+        buttonAreaElement.style.display = "none";
+        break;
+      case Game.Status.EXACT:
+        messageElement.textContent = "21です。";
+        reloadElement.style.display = "block";
+        buttonAreaElement.style.display = "none";
+        break;
+      case Game.Status.OVER:
+        messageElement.textContent = "バーストです。";
+        reloadElement.style.display = "block";
+        buttonAreaElement.style.display = "none";
+        break;
+      case Game.Status.UNDER:
+        reloadElement.style.display = "none";
+        buttonAreaElement.style.display = "block";
+        break;
+      default:
+        throw new Error("ゲームステータスが返ってきません。");
+    }
   }
 }
