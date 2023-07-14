@@ -44,7 +44,7 @@ export class InHands {
       }
     });
     // 合計と1の枚数が11未満なら、1の枚数に10を足す（11と判断されるaceの数は1枚以上にはならないから）
-    if (total + numberOfAce <= 11) {
+    if (numberOfAce !== 0 && total + numberOfAce <= 11) {
       total += numberOfAce + this.HIGH_CARD; //HIGH_CARD === 10
     } else {
       total += numberOfAce;

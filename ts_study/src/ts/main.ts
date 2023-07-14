@@ -1,1 +1,4 @@
-console.log("ts started.");
+import { ActionManager } from "./actionManager";
+
+// ゲームスタート
+ActionManager.startGame();
