@@ -76,10 +76,6 @@ export namespace Disp {
    * @param inHands 手札クラス
    */
   export function updateStatus(inHands: InHands) {
-    const messageElement = getElement(ElementId.STATUS_MESSAGE);
-    const reloadElement = getElement(ElementId.RELOAD_BUTTON);
-    const buttonAreaElement = getElement(ElementId.BUTTON_AREA);
-
     const status = Game.MainLogic.judgeByCards(inHands);
     switch (status) {
       case Game.Status.JACK:
