@@ -5,6 +5,26 @@
     <title>TS学習</title>
   </head>
   <body>
-    <div>Hello TypeScript World.</div>
+    <div
+      style="border: 1px solid; width: 120px; height: 150px; text-align: center"
+    >
+      <h3>デッキ</h3>
+      <span>残り枚数：</span>
+      <span id="remaining"></span>
+    </div>
+    <p>***********************************************</p>
+    <span>手札の合計</span><span id="totalNum"></span>
+    <div id="cardInHands"></div>
   </body>
 </html>
+<script src="main.ts"></script>
+<style>
+  .card {
+    border: 1px solid;
+    width: 120px;
+    height: 150px;
+    text-align: center;
+    margin: 3px;
+    float: left;
+  }
+</style>
