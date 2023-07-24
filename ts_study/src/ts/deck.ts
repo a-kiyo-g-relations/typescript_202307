@@ -22,7 +22,7 @@ export class Deck {
     // マークそれぞれに対し1~13の数字のカードを作成し、配列に入れる
     Card.SYMBOL_MARKS.forEach((symbol) => {
       for (let i = Card.MIN_NUMBER; i <= Card.MAX_NUMBER; i++) {
-        const card = { num: i, symbol: symbol, viewSide: Card.ViewSide.BACK };
+        const card = { num: i, symbol: symbol, viside: false };
         cardArray.push(card);
       }
     });

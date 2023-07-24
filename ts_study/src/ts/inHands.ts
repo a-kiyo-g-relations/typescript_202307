@@ -3,7 +3,11 @@ export class InHands {
   /**
    * 手札の識別ID
    */
-  static id: number = 0;
+  static currentId: number = 0;
+  /**
+   * 識別IDを保持する変数
+   */
+  private id: number;
   /**
    * 手札を定義する変数
    */
@@ -20,7 +24,8 @@ export class InHands {
    * コンストラクタ：インスタンス化された際にidをインクリメントする
    */
   constructor() {
-    InHands.id++;
+    this.id = InHands.currentId;
+    InHands.currentId++;
   }
   /**
    * 手札を作るメソッド

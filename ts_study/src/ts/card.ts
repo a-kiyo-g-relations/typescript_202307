@@ -22,14 +22,6 @@ export namespace Card {
   ];
 
   /**
-   * カードの裏表を定義
-   */
-  export enum ViewSide {
-    FRONT,
-    BACK,
-  }
-
-  /**
    * カード1枚分のデータの型定義
    */
   export type elements = {
@@ -38,6 +30,6 @@ export namespace Card {
     // マーク
     readonly symbol: SymbolMark;
     // カードの裏表
-    viewSide: ViewSide;
+    viside: boolean;
   };
 }
