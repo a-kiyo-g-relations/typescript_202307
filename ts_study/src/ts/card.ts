@@ -30,6 +30,6 @@ export namespace Card {
     // マーク
     readonly symbol: SymbolMark;
     // カードの裏表
-    viside: boolean;
+    visible: boolean;
   };
 }
