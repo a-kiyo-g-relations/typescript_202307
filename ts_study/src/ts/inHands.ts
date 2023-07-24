@@ -1,6 +1,10 @@
 import { Card } from "./card";
 export class InHands {
   /**
+   * 手札の識別ID
+   */
+  static id: number = 0;
+  /**
    * 手札を定義する変数
    */
   private cards: Card.elements[] = [];
@@ -12,6 +16,12 @@ export class InHands {
    * ハイカード（10以上）を定義する
    */
   private HIGH_CARD: number = 10;
+  /**
+   * コンストラクタ：インスタンス化された際にidをインクリメントする
+   */
+  constructor() {
+    InHands.id++;
+  }
   /**
    * 手札を作るメソッド
    * @param card デッキから引いたカード1枚のデータ

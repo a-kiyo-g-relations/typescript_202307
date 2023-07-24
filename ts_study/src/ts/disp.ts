@@ -9,10 +9,14 @@ export namespace Disp {
    * 表示する場所のID
    */
   namespace ElementId {
-    /** 手札 */
+    /** 自分の手札 */
     export const CARD_IN_HANDS = "cardInHands";
-    /** 手札の合計 */
+    /** ディーラーの手札 */
+    export const CARD_IN_DEELER = "cardInDeeler";
+    /** 自分の手札の合計 */
     export const TOTAL_NUMBER = "totalNumber";
+    /** ディーラーの手札の合計 */
+    export const TOTAL_NUMBER_OF_DEELER = "totalNumberOfDeeler";
     /** ステータスメッセージ */
     export const STATUS_MESSAGE = "statusMessage";
     /** リロードボタン */
@@ -48,7 +52,7 @@ export namespace Disp {
   }
 
   /**
-   * 手札を表示するメソッド
+   * 自分の手札を表示するメソッド
    * @param id index.htmlから取得した手札を表示するブロックのID
    * @param cards 手札の配列
    */
@@ -62,12 +66,35 @@ export namespace Disp {
     }
   }
   /**
-   * 手札の合計を表示するメソッド
+   * 自分の手札の合計を表示するメソッド
    * @param id index.htmlから取得した手札の合計を表示するブロックのID
    * @param totalNum　手札の合計
    */
   export function totalNum(inHands: InHands) {
     const targetElement = getElement(ElementId.TOTAL_NUMBER);
+    targetElement.textContent = inHands.culcNumber().toString();
+  }
+  /**
+   * ディーラーの手札を表示するメソッド
+   * @param id index.htmlから取得した手札を表示するブロックのID
+   * @param cards 手札の配列
+   */
+  export function cardInDeeler(inHands: InHands) {
+    const targetElement = getElement(ElementId.CARD_IN_DEELER);
+    targetElement.innerHTML = "";
+    const cards = inHands.getCards();
+    for (let i = 0; i < cards.length; i++) {
+      const card = createCardElement(cards[i]);
+      targetElement.appendChild(card);
+    }
+  }
+  /**
+   * ディーラーの手札の合計を表示するメソッド
+   * @param id index.htmlから取得した手札の合計を表示するブロックのID
+   * @param totalNum　手札の合計
+   */
+  export function totalNumOfDeeler(inHands: InHands) {
+    const targetElement = getElement(ElementId.TOTAL_NUMBER_OF_DEELER);
     targetElement.textContent = inHands.culcNumber().toString();
   }
 
