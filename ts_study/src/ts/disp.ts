@@ -86,7 +86,7 @@ export namespace Disp {
    * 自分の手札の合計を表示するメソッド
    * @param inHands 手札のクラス
    */
-  export function totalOfPlayer(inHands: InHands) {
+  export function totalNumberPlayer(inHands: InHands) {
     totalNum(ElementId.TOTAL_NUMBER_PLAYER, inHands);
   }
 
@@ -94,7 +94,7 @@ export namespace Disp {
    * ディーラーの手札の合計を表示するメソッド
    * @param inHands 手札のクラス
    */
-  export function totalOfDeeler(inHands: InHands) {
+  export function totalNumberDeeler(inHands: InHands) {
     totalNum(ElementId.TOTAL_NUMBER_DEELER, inHands);
   }
 

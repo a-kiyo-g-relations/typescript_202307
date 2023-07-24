@@ -57,7 +57,7 @@ export namespace ActionManager {
    */
   function displayCard() {
     Disp.cardInHands(inHands);
-    Disp.totalNum(inHands);
+    Disp.totalNumberPlayer(inHands);
   }
 
   /**
