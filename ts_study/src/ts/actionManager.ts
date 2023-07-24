@@ -56,7 +56,7 @@ export namespace ActionManager {
    * 手札を表示し合計も表示するメソッド
    */
   function displayCard() {
-    Disp.cardInHands(inHands);
+    Disp.cardPlayer(inHands);
     Disp.totalNumberPlayer(inHands);
   }
 

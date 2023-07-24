@@ -55,7 +55,7 @@ export namespace Disp {
    * 自分の手札を表示するメソッド
    * @param inHands 手札のクラス
    */
-  export function cardInHands(inHands: InHands) {
+  export function cardPlayer(inHands: InHands) {
     displayCards(ElementId.CARD_PLAYER, inHands);
   }
 
@@ -63,7 +63,7 @@ export namespace Disp {
    * ディーラーの手札を表示するメソッド
    * @param inHands 手札のクラス
    */
-  export function cardInDeeler(inHands: InHands) {
+  export function cardDeeler(inHands: InHands) {
     displayCards(ElementId.CARD_DEELER, inHands);
   }
 
@@ -87,7 +87,7 @@ export namespace Disp {
    * @param inHands 手札のクラス
    */
   export function totalNumberPlayer(inHands: InHands) {
-    totalNum(ElementId.TOTAL_NUMBER_PLAYER, inHands);
+    displayTotalNumber(ElementId.TOTAL_NUMBER_PLAYER, inHands);
   }
 
   /**
@@ -95,7 +95,7 @@ export namespace Disp {
    * @param inHands 手札のクラス
    */
   export function totalNumberDeeler(inHands: InHands) {
-    totalNum(ElementId.TOTAL_NUMBER_DEELER, inHands);
+    displayTotalNumber(ElementId.TOTAL_NUMBER_DEELER, inHands);
   }
 
   /**
@@ -103,7 +103,7 @@ export namespace Disp {
    * @param elementId 表示する場所のエレメントID
    * @param inHands 手札のクラス
    */
-  function totalNum(elementId: string, inHands: InHands) {
+  function displayTotalNumber(elementId: string, inHands: InHands) {
     const targetElement = getElement(elementId);
     targetElement.textContent = inHands.culcNumber().toString();
   }
