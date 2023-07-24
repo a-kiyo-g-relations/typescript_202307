@@ -29,5 +29,7 @@ export namespace Card {
     readonly num: number;
     // マーク
     readonly symbol: SymbolMark;
+    // カードの裏表
+    visible: boolean;
   };
 }
