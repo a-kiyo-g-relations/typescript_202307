@@ -10,13 +10,13 @@ export namespace Disp {
    */
   namespace ElementId {
     /** 自分の手札 */
-    export const CARD_IN_HANDS = "cardInHands";
+    export const CARD_PLAYER = "cardPlayer";
     /** ディーラーの手札 */
-    export const CARD_IN_DEELER = "cardInDeeler";
+    export const CARD_DEELER = "cardDeeler";
     /** 自分の手札の合計 */
-    export const TOTAL_NUMBER = "totalNumber";
+    export const TOTAL_NUMBER_PLAYER = "totalNumberPlayer";
     /** ディーラーの手札の合計 */
-    export const TOTAL_NUMBER_OF_DEELER = "totalNumberOfDeeler";
+    export const TOTAL_NUMBER_DEELER = "totalNumberDeeler";
     /** ステータスメッセージ */
     export const STATUS_MESSAGE = "statusMessage";
     /** リロードボタン */
@@ -56,7 +56,7 @@ export namespace Disp {
    * @param inHands 手札のクラス
    */
   export function cardInHands(inHands: InHands) {
-    displayCards(ElementId.CARD_IN_HANDS, inHands);
+    displayCards(ElementId.CARD_PLAYER, inHands);
   }
 
   /**
@@ -64,7 +64,7 @@ export namespace Disp {
    * @param inHands 手札のクラス
    */
   export function cardInDeeler(inHands: InHands) {
-    displayCards(ElementId.CARD_IN_DEELER, inHands);
+    displayCards(ElementId.CARD_DEELER, inHands);
   }
 
   /**
@@ -87,7 +87,7 @@ export namespace Disp {
    * @param inHands 手札のクラス
    */
   export function totalOfPlayer(inHands: InHands) {
-    totalNum(ElementId.TOTAL_NUMBER, inHands);
+    totalNum(ElementId.TOTAL_NUMBER_PLAYER, inHands);
   }
 
   /**
@@ -95,7 +95,7 @@ export namespace Disp {
    * @param inHands 手札のクラス
    */
   export function totalOfDeeler(inHands: InHands) {
-    totalNum(ElementId.TOTAL_NUMBER_OF_DEELER, inHands);
+    totalNum(ElementId.TOTAL_NUMBER_DEELER, inHands);
   }
 
   /**
@@ -103,7 +103,7 @@ export namespace Disp {
    * @param elementId 表示する場所のエレメントID
    * @param inHands 手札のクラス
    */
-  export function totalNum(elementId: string, inHands: InHands) {
+  function totalNum(elementId: string, inHands: InHands) {
     const targetElement = getElement(elementId);
     targetElement.textContent = inHands.culcNumber().toString();
   }

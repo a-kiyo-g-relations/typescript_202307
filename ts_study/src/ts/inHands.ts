@@ -3,7 +3,7 @@ export class InHands {
   /**
    * 手札の識別ID
    */
-  static currentId: number = 0;
+  static currentId: number = 1;
   /**
    * 識別IDを保持する変数
    */
