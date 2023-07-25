@@ -27,15 +27,19 @@ export class InHands {
     this.id = InHands.currentId;
     InHands.currentId++;
   }
+
+  /**
+   * 識別IDを取得するメソッド
+   */
+  getId(): number {
+    return this.id;
+  }
+
   /**
    * 手札を作るメソッド
    * @param card デッキから引いたカード1枚のデータ
-   * @param visible カードの裏表（裏の時だけ渡す）
    */
-  addCard(card: Card.elements, visible?: boolean) {
-    if (visible !== undefined) {
-      card.visible = visible;
-    }
+  addCard(card: Card.elements) {
     this.cards.push(card);
   }
   /**
