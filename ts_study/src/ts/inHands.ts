@@ -30,8 +30,12 @@ export class InHands {
   /**
    * 手札を作るメソッド
    * @param card デッキから引いたカード1枚のデータ
+   * @param visible カードの裏表（裏の時だけ渡す）
    */
-  addCard(card: Card.elements) {
+  addCard(card: Card.elements, visible?: boolean) {
+    if (visible !== undefined) {
+      card.visible = visible;
+    }
     this.cards.push(card);
   }
   /**

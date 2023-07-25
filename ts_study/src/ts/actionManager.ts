@@ -15,8 +15,11 @@ export namespace ActionManager {
 
   /** デッキのクラスをインスタンス化 */
   const deck = new Deck();
-  /** 手札のクラスをインスタンス化 */
-  const inHands = new InHands();
+
+  /** プレイヤーの手札をインスタンス化 */
+  const player = new InHands();
+  /** ディーラーの手札をインスタンス化 */
+  const deeler = new InHands();
 
   /**
    * エレメントを取得するメソッド
@@ -35,36 +38,41 @@ export namespace ActionManager {
    * ゲームスタート時の初期処理
    */
   export function startGame() {
-    drawCard();
-    drawCard();
+    drawCard(player);
+    drawCard(player);
+    drawCard(deeler);
+    drawCard(deeler, false);
     displayCard();
     displayStatus();
   }
 
   /**
    * デッキからカードを引く（手札に加える）メソッド
+   * @param inHands 手札のインスタンス
+   * @param visible カードの裏表（裏の時だけ渡す）
    */
-  function drawCard() {
+  function drawCard(inHands: InHands, visible?: boolean) {
     const card = deck.drawCard();
     if (!card) {
       throw new Error("カードが引けない");
     }
-    inHands.addCard(card);
+    inHands.addCard(card, visible);
   }
 
   /**
    * 手札を表示し合計も表示するメソッド
    */
   function displayCard() {
-    Disp.cardPlayer(inHands);
-    Disp.totalNumberPlayer(inHands);
+    Disp.cardPlayer(player);
+    Disp.cardDeeler(deeler);
+    Disp.totalNumberPlayer(player);
   }
 
   /**
    * ステータスメッセージとボタンを表示するメソッド
    */
   function displayStatus() {
-    Disp.updateStatus(inHands);
+    Disp.updateStatus(player);
   }
 
   /**
@@ -87,13 +95,13 @@ export namespace ActionManager {
 
   /** 今の手札で終了する */
   function stay() {
-    Disp.alertWrapp(inHands);
+    Disp.alertWrapp(player);
     finish();
   }
 
   /** ゲームを続ける（もう一枚引く） */
   function hit() {
-    drawCard();
+    drawCard(player);
     displayCard();
     displayStatus();
   }

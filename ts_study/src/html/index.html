@@ -8,20 +8,22 @@
     <div class="deck">
       <h3>デッキ</h3>
     </div>
-    <p>***********************************************</p>
-    <p>ディーラーの手札</p>
-    <span>手札の合計</span><span id="totalNumberDeeler"></span>
-    <div id="cardDeeler"></div>
-    <p>***********************************************</p>
-    <p>自分の手札</p>
-    <p id="statusMessage"></p>
-    <button id="reloadButton">終了</button>
-    <div id="buttonArea">
-      <button id="hitButton">HIT</button>
-      <button id="stayButton">STAY</button>
+    <div class="deelerCards">
+      <p>ディーラーの手札</p>
+      <span>手札の合計</span><span id="totalNumberDeeler"></span>
+      <div id="cardDeeler"></div>
     </div>
-    <span>手札の合計</span><span id="totalNumberPlayer"></span>
-    <div id="cardPlayer"></div>
+    <div class="playerCards">
+      <p>自分の手札</p>
+      <p id="statusMessage"></p>
+      <button id="reloadButton">終了</button>
+      <div id="buttonArea">
+        <button id="hitButton">HIT</button>
+        <button id="stayButton">STAY</button>
+      </div>
+      <span>手札の合計</span><span id="totalNumberPlayer"></span>
+      <div id="cardPlayer"></div>
+    </div>
   </body>
 </html>
 <style>
@@ -30,6 +32,18 @@
     width: 120px;
     height: 150px;
     text-align: center;
+  }
+  .deelerCards {
+    border-top: 2px solid;
+    height: auto;
+    overflow: hidden;
+    margin: 10px 0;
+  }
+  .playerCards {
+    border-top: 2px solid;
+    height: auto;
+    overflow: hidden;
+    margin: 10px 0;
   }
   .card {
     border: 1px solid;
