@@ -7,7 +7,7 @@ export class InHands {
   /**
    * 識別IDを保持する変数
    */
-  private id: number;
+  id: number;
   /**
    * 手札を定義する変数
    */
@@ -27,6 +27,7 @@ export class InHands {
     this.id = InHands.currentId;
     InHands.currentId++;
   }
+
   /**
    * 手札を作るメソッド
    * @param card デッキから引いたカード1枚のデータ

@@ -1,6 +1,7 @@
 import { InHands } from "./inHands";
 import { Deck } from "./deck";
 import { Disp } from "./disp";
+import { Card } from "./card";
 
 export namespace ActionManager {
   /** 表示されたボタンのID */
@@ -15,8 +16,11 @@ export namespace ActionManager {
 
   /** デッキのクラスをインスタンス化 */
   const deck = new Deck();
-  /** 手札のクラスをインスタンス化 */
-  const inHands = new InHands();
+
+  /** プレイヤーの手札をインスタンス化 */
+  const playerInHands = new InHands();
+  /** ディーラーの手札をインスタンス化 */
+  const deelerInHands = new InHands();
 
   /**
    * エレメントを取得するメソッド
@@ -35,36 +39,58 @@ export namespace ActionManager {
    * ゲームスタート時の初期処理
    */
   export function startGame() {
-    drawCard();
-    drawCard();
+    drawCardPlayer();
+    drawCardPlayer();
+    drawCardDeeler();
+    drawCardDeeler(false);
     displayCard();
     displayStatus();
   }
 
   /**
-   * デッキからカードを引く（手札に加える）メソッド
+   * デッキからカードを引くメソッド
+   * @param visible カードの裏表（裏の時だけ渡す）
    */
-  function drawCard() {
-    const card = deck.drawCard();
+  function drawCard(visible: boolean): Card.elements {
+    const card = deck.drawCard(visible);
     if (!card) {
-      throw new Error("カードが引けない");
+      throw new Error("引けるカードがありません。");
     }
-    inHands.addCard(card);
+    return card;
+  }
+
+  /**
+   * プレイヤーがカードを手札に加えるメソッド
+   * @param visible カードの裏表
+   */
+  function drawCardPlayer(visible: boolean = true) {
+    const card = drawCard(visible);
+    playerInHands.addCard(card);
+  }
+
+  /**
+   * ディーラーがカードを手札に加えるメソッド
+   * @param visible カードの裏表
+   */
+  function drawCardDeeler(visible: boolean = true) {
+    const card = drawCard(visible);
+    deelerInHands.addCard(card);
   }
 
   /**
    * 手札を表示し合計も表示するメソッド
    */
   function displayCard() {
-    Disp.cardPlayer(inHands);
-    Disp.totalNumberPlayer(inHands);
+    Disp.cardPlayer(playerInHands);
+    Disp.cardDeeler(deelerInHands);
+    Disp.totalNumberPlayer(playerInHands);
   }
 
   /**
    * ステータスメッセージとボタンを表示するメソッド
    */
   function displayStatus() {
-    Disp.updateStatus(inHands);
+    Disp.updateStatus(playerInHands);
   }
 
   /**
@@ -87,13 +113,13 @@ export namespace ActionManager {
 
   /** 今の手札で終了する */
   function stay() {
-    Disp.alertWrapp(inHands);
+    Disp.alertWrapp(playerInHands);
     finish();
   }
 
   /** ゲームを続ける（もう一枚引く） */
   function hit() {
-    drawCard();
+    drawCardPlayer();
     displayCard();
     displayStatus();
   }

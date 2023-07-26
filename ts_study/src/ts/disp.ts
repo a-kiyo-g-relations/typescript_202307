@@ -46,8 +46,12 @@ export namespace Disp {
   function createCardElement(card: Card.elements): HTMLDivElement {
     let createdDiv = document.createElement("div");
     createdDiv.className = "card";
-    createdDiv.innerHTML =
-      "<p>" + card.num + "</p>" + "<p>" + card.symbol + "</p>";
+    if (card.visible) {
+      createdDiv.innerHTML =
+        "<p>" + card.num + "</p>" + "<p>" + card.symbol + "</p>";
+    } else {
+      createdDiv.innerHTML = "<p>裏</p>";
+    }
     return createdDiv;
   }
 
