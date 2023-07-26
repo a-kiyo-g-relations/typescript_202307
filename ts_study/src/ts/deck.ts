@@ -45,12 +45,11 @@ export class Deck {
    * デッキからカードを1枚引く（配列の先頭を切り取る）メソッド
    * @returns デッキの先頭の1枚
    */
-  drawCard(visible: boolean): Card.elements {
+  drawCard(visible: boolean): Card.elements | undefined {
     const card = this.cardMembers.shift();
-    if (!card) {
-      throw new Error("カードが引けない");
+    if (card) {
+      card.visible = visible;
     }
-    card.visible = visible;
     return card;
   }
 }

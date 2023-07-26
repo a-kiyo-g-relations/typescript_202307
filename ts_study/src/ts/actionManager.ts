@@ -22,12 +22,6 @@ export namespace ActionManager {
   /** ディーラーの手札をインスタンス化 */
   const deelerInHands = new InHands();
 
-  /** プレイヤーとディーラーの識別IDを定数化 */
-  namespace InHandsId {
-    export const PLAEYR = playerInHands.getId();
-    export const DEELER = deelerInHands.getId();
-  }
-
   /**
    * エレメントを取得するメソッド
    * @param elementId 押されたボタンのID
@@ -45,10 +39,10 @@ export namespace ActionManager {
    * ゲームスタート時の初期処理
    */
   export function startGame() {
-    drawCard(playerInHands);
-    drawCard(playerInHands);
-    drawCard(deelerInHands);
-    drawCard(deelerInHands, false);
+    drawCardPlayer();
+    drawCardPlayer();
+    drawCardDeeler();
+    drawCardDeeler(false);
     displayCard();
     displayStatus();
   }
@@ -58,26 +52,20 @@ export namespace ActionManager {
    * @param inHands 手札のインスタンス
    * @param visible カードの裏表（裏の時だけ渡す）
    */
-  function drawCard(inHands: InHands, visible: boolean = true) {
+  function drawCard(visible: boolean): Card.elements {
     const card = deck.drawCard(visible);
-    const id = inHands.getId();
-    switch (id) {
-      case InHandsId.PLAEYR:
-        drawCardPlayer(card);
-        break;
-      case InHandsId.DEELER:
-        drawCardDeeler(card);
-        break;
-      default:
-        throw new Error("idがありません");
+    if (!card) {
+      throw new Error("引けるカードがありません。");
     }
+    return card;
   }
 
   /**
    * プレイヤーがカードを手札に加えるメソッド
    * @param card デッキから引いたカード
    */
-  function drawCardPlayer(card: Card.elements) {
+  function drawCardPlayer(visible: boolean = true) {
+    const card = drawCard(visible);
     playerInHands.addCard(card);
   }
 
@@ -85,7 +73,8 @@ export namespace ActionManager {
    * ディーラーがカードを手札に加えるメソッド
    * @param card デッキから引いたカード
    */
-  function drawCardDeeler(card: Card.elements) {
+  function drawCardDeeler(visible: boolean = true) {
+    const card = drawCard(visible);
     deelerInHands.addCard(card);
   }
 
@@ -131,7 +120,7 @@ export namespace ActionManager {
 
   /** ゲームを続ける（もう一枚引く） */
   function hit() {
-    drawCard(playerInHands);
+    drawCardPlayer();
     displayCard();
     displayStatus();
   }
