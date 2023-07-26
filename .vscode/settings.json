@@ -1,4 +1,5 @@
 {
   "editor.formatOnSave": true,
+  "typescript.tsdk": "ts_study/node_modules/typescript/lib",
   "editor.defaultFormatter": "esbenp.prettier-vscode"
 }
