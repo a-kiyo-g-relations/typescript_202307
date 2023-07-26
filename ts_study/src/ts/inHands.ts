@@ -51,6 +51,11 @@ export class InHands {
     let total = 0;
     // 手札1枚ずつの判定
     this.cards.forEach((card) => {
+      // 裏のカードは計算しない
+      if (!card.visible) {
+        return;
+      }
+
       if (card.num === this.ACE) {
         numberOfAce++;
       } else if (card.num > this.HIGH_CARD) {
