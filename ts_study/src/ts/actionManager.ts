@@ -49,7 +49,6 @@ export namespace ActionManager {
 
   /**
    * デッキからカードを引くメソッド
-   * @param inHands 手札のインスタンス
    * @param visible カードの裏表（裏の時だけ渡す）
    */
   function drawCard(visible: boolean): Card.elements {
@@ -62,7 +61,7 @@ export namespace ActionManager {
 
   /**
    * プレイヤーがカードを手札に加えるメソッド
-   * @param card デッキから引いたカード
+   * @param visible カードの裏表
    */
   function drawCardPlayer(visible: boolean = true) {
     const card = drawCard(visible);
@@ -71,7 +70,7 @@ export namespace ActionManager {
 
   /**
    * ディーラーがカードを手札に加えるメソッド
-   * @param card デッキから引いたカード
+   * @param visible カードの裏表
    */
   function drawCardDeeler(visible: boolean = true) {
     const card = drawCard(visible);

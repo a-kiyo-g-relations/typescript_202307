@@ -43,6 +43,7 @@ export class Deck {
   }
   /**
    * デッキからカードを1枚引く（配列の先頭を切り取る）メソッド
+   * @param visible カードの裏表
    * @returns デッキの先頭の1枚
    */
   drawCard(visible: boolean): Card.elements | undefined {
