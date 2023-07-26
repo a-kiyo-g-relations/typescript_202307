@@ -48,9 +48,10 @@ export class Deck {
    */
   drawCard(visible: boolean): Card.elements | undefined {
     const card = this.cardMembers.shift();
-    if (card) {
-      card.visible = visible;
+    if (!card) {
+      return card;
     }
+    card.visible = visible;
     return card;
   }
 }
