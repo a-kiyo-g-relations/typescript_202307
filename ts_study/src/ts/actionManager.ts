@@ -2,6 +2,7 @@ import { InHands } from "./inHands";
 import { Deck } from "./deck";
 import { Disp } from "./disp";
 import { Card } from "./card";
+import { Game } from "./game";
 
 export namespace ActionManager {
   /** 表示されたボタンのID */
@@ -23,40 +24,114 @@ export namespace ActionManager {
   const deelerInHands = new InHands();
 
   /**
-   * エレメントを取得するメソッド
-   * @param elementId 押されたボタンのID
-   * @returns 取得したエレメント
+   * ボタンにクリックアクションを付与する
    */
-  function getElement(elementId: string): HTMLElement {
-    const element = document.getElementById(elementId);
-    if (element === null) {
-      throw new Error("指定されたIDのタグが見つかりません。");
-    }
-    return element;
+  export function initializeButton() {
+    const reloadButton = getElement(ButtonId.RELOAD_BUTTON);
+    const hitButton = getElement(ButtonId.HIT_BUTTON);
+    const stayButton = getElement(ButtonId.STAY_BUTTON);
+
+    reloadButton.onclick = finish;
+    stayButton.onclick = stay;
+    hitButton.onclick = hit;
   }
 
   /**
    * ゲームスタート時の初期処理
    */
   export function startGame() {
+    // プレイヤーのカードを引く
     drawCardPlayer();
     drawCardPlayer();
+    // ディーラーのカードを引く
     drawCardDeeler();
     drawCardDeeler(false);
-    displayCard();
-    displayStatus();
+
+    // 手札情報を表示する
+    displayPlayer();
+    displayDeeler();
+
+    // プレイヤーのステータスを判定し後続処理に飛ばす
+    checkPlayerStatus();
   }
 
   /**
-   * デッキからカードを引くメソッド
-   * @param visible カードの裏表（裏の時だけ渡す）
+   * プレイヤーの手札によって処理を分岐させる
    */
-  function drawCard(visible: boolean): Card.elements {
-    const card = deck.drawCard(visible);
-    if (!card) {
-      throw new Error("引けるカードがありません。");
+  function checkPlayerStatus() {
+    const status = Game.MainLogic.judgeByCards(playerInHands);
+    switch (status) {
+      case Game.Status.JACK:
+        deelerGame();
+        break;
+      case Game.Status.EXACT:
+        deelerGame();
+        break;
+      case Game.Status.OVER:
+        burstGame();
+        break;
+      case Game.Status.UNDER:
+        waitPlayerChoice();
+        break;
     }
-    return card;
+  }
+
+  /**
+   * ディーラーのターン開始
+   * TODO: 次の課題(#87)で実装する
+   */
+  function deelerGame() {
+    Disp.hitStayButton(false);
+    alert("ディーラーの処理に移る。");
+  }
+
+  /**
+   * HIT_STAYボタン表示：プレイヤーの入力を待つ
+   */
+  function waitPlayerChoice() {
+    Disp.hitStayButton(true);
+  }
+
+  /**
+   * バーストでゲーム終了
+   */
+  function burstGame() {
+    Disp.hitStayButton(false);
+    Disp.reloadButton(true);
+  }
+
+  /**
+   * 今の手札でプレイヤーのターンを終了する
+   */
+  function stay() {
+    Disp.alertWrapp(playerInHands);
+    deelerGame();
+  }
+
+  /**
+   * ゲームを続ける（もう一枚引く）
+   */
+  function hit() {
+    drawCardPlayer();
+    displayPlayer();
+    checkPlayerStatus();
+  }
+
+  /**
+   * プレイヤーの手札を表示するメソッド
+   */
+  function displayPlayer() {
+    Disp.cardPlayer(playerInHands);
+    Disp.totalNumberPlayer(playerInHands);
+    Disp.statusMessage(playerInHands);
+  }
+
+  /**
+   * ディーラーの手札を表示するメソッド
+   */
+  function displayDeeler() {
+    Disp.cardDeeler(deelerInHands);
+    Disp.totalNumberDeeler(deelerInHands);
   }
 
   /**
@@ -78,54 +153,35 @@ export namespace ActionManager {
   }
 
   /**
-   * 手札を表示し合計も表示するメソッド
+   * デッキからカードを引くメソッド
+   * @param visible カードの裏表（裏の時だけ渡す）
+   * @return デッキから引いたカード１枚
    */
-  function displayCard() {
-    Disp.cardPlayer(playerInHands);
-    Disp.cardDeeler(deelerInHands);
-    Disp.totalNumberPlayer(playerInHands);
+  function drawCard(visible: boolean): Card.elements {
+    const card = deck.drawCard(visible);
+    if (!card) {
+      throw new Error("引けるカードがありません。");
+    }
+    return card;
   }
 
   /**
-   * ステータスメッセージとボタンを表示するメソッド
+   * ゲームを終了するメソッド
    */
-  function displayStatus() {
-    Disp.updateStatus(playerInHands);
-  }
-
-  /**
-   * ボタンにクリックアクションを付与する
-   */
-  export function initializeButton() {
-    const reloadButton = getElement(ButtonId.RELOAD_BUTTON);
-    const hitButton = getElement(ButtonId.HIT_BUTTON);
-    const stayButton = getElement(ButtonId.STAY_BUTTON);
-
-    reloadButton.onclick = finishGame;
-    stayButton.onclick = stay;
-    hitButton.onclick = hit;
-  }
-
-  /** ゲーム終了 */
-  function finishGame() {
-    finish();
-  }
-
-  /** 今の手札で終了する */
-  function stay() {
-    Disp.alertWrapp(playerInHands);
-    finish();
-  }
-
-  /** ゲームを続ける（もう一枚引く） */
-  function hit() {
-    drawCardPlayer();
-    displayCard();
-    displayStatus();
-  }
-
-  /** ゲームを終了するメソッド */
   function finish() {
     location.reload();
+  }
+
+  /**
+   * エレメントを取得するメソッド
+   * @param elementId 押されたボタンのID
+   * @returns 取得したエレメント
+   */
+  function getElement(elementId: string): HTMLElement {
+    const element = document.getElementById(elementId);
+    if (element === null) {
+      throw new Error("指定されたIDのタグが見つかりません。");
+    }
+    return element;
   }
 }

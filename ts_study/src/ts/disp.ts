@@ -22,7 +22,7 @@ export namespace Disp {
     /** リロードボタン */
     export const RELOAD_BUTTON = "reloadButton";
     /** ヒットボタンとステイボタンの表示エリア */
-    export const BUTTON_AREA = "buttonArea";
+    export const HIT_STAY_BUTTON = "buttonArea";
   }
 
   /**
@@ -113,49 +113,59 @@ export namespace Disp {
   }
 
   /**
-   * ステータスメッセージとボタンの表示を更新する
+   * ステータスメッセージを表示する
    * @param inHands 手札クラス
    */
-  export function updateStatus(inHands: InHands) {
+  export function statusMessage(inHands: InHands) {
     const status = Game.MainLogic.judgeByCards(inHands);
     switch (status) {
       case Game.Status.JACK:
-        setStatusMessage("ブラックジャックです。");
-        toggleDisplayButtons(true);
+        setStatusMessage(
+          "ブラックジャックです。ディーラーにターンが移ります。"
+        );
         break;
       case Game.Status.EXACT:
-        setStatusMessage("21です。");
-        toggleDisplayButtons(true);
+        setStatusMessage("21です。ディーラーにターンが移ります。");
         break;
       case Game.Status.OVER:
         setStatusMessage("バーストです。");
-        toggleDisplayButtons(true);
         break;
-      case Game.Status.UNDER:
-        toggleDisplayButtons(false);
-        break;
-      default:
-        throw new Error("ゲームステータスが返ってきません。");
     }
   }
 
   /**
-   * ボタンの表示/非表示を切り替えるメソッド
+   * リロードボタンの表示非表示を切り替えるメソッド
+   * @param visible 表示・非表示
    */
-  function toggleDisplayButtons(enableFinish: boolean) {
-    const reloadElement = getElement(ElementId.RELOAD_BUTTON);
-    const buttonAreaElement = getElement(ElementId.BUTTON_AREA);
-    if (enableFinish) {
-      reloadElement.style.display = "block";
-      buttonAreaElement.style.display = "none";
+  export function reloadButton(visible: boolean) {
+    toggleDisplayButtons(ElementId.RELOAD_BUTTON, visible);
+  }
+
+  /**
+   * ヒットステイボタンの表示非表示を切り替えるメソッド
+   * @param visible 表示・非表示
+   */
+  export function hitStayButton(visible: boolean) {
+    toggleDisplayButtons(ElementId.HIT_STAY_BUTTON, visible);
+  }
+
+  /**
+   * ボタンの表示/非表示を切り替えるメソッド
+   * @param element ボタンのエレメントのID
+   * @param visible 表示・非表示
+   */
+  function toggleDisplayButtons(element: string, visible: boolean) {
+    const button = getElement(element);
+    if (visible) {
+      button.style.display = "block";
     } else {
-      reloadElement.style.display = "none";
-      buttonAreaElement.style.display = "block";
+      button.style.display = "none";
     }
   }
 
   /**
    * ステータスメッセージをセットするメソッド
+   * @param message ステータスメッセージ
    */
   function setStatusMessage(message: string) {
     const messageElement = getElement(ElementId.STATUS_MESSAGE);
