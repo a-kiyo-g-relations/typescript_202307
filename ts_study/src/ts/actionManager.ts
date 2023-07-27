@@ -3,6 +3,7 @@ import { Deck } from "./deck";
 import { Disp } from "./disp";
 import { Card } from "./card";
 import { Game } from "./game";
+import { Wait } from "./wait";
 
 export namespace ActionManager {
   /** 表示されたボタンのID */
@@ -81,8 +82,51 @@ export namespace ActionManager {
    * TODO: 次の課題(#87)で実装する
    */
   function deelerGame() {
+    // ヒットステイボタンを非表示にする
     Disp.hitStayButton(false);
-    alert("ディーラーの処理に移る。");
+
+    // カードを開く。
+    openCardDeeler();
+
+    // 17以上になるまで引く
+    repeatDrawDeeler();
+  }
+
+  /**
+   * ディーラーのカードを表にするメソッド
+   */
+  function openCardDeeler() {
+    const cards = deelerInHands.getCards();
+    cards.forEach((card) => {
+      if (card.visible) {
+        return;
+      }
+      card.visible = true;
+    });
+    displayDeeler();
+  }
+
+  /**
+   * ディーラーが17以上になるまで引き続けるメソッド
+   */
+  async function repeatDrawDeeler() {
+    const draw = Game.MainLogic.repeatDarwCard(deelerInHands);
+    if (!draw) {
+      return;
+    }
+    await waitTimeDeeler();
+    drawCardDeeler();
+    displayDeeler();
+    repeatDrawDeeler();
+  }
+
+  /**
+   * ディーラーの処理を待たせる（考え中）メソッド
+   */
+  async function waitTimeDeeler() {
+    Disp.toggleThinkingmessage(true);
+    await Wait.sec(3);
+    Disp.toggleThinkingmessage(false);
   }
 
   /**

@@ -18,6 +18,11 @@ export namespace Game {
      */
     static BLACK_JACK_NUMBER = 21;
     /**
+     * ディーラーがカードを引くかどうかの判定数字
+     */
+    static REPEAT_DRAW_NUMBER = 17;
+
+    /**
      * 手札の合計値からプレイヤーのステータスを判定するメソッド
      * @param inHands 手札のクラス
      * @returns 手札のステータスを返す
@@ -31,6 +36,18 @@ export namespace Game {
         return Game.Status.OVER;
       }
       return Game.Status.UNDER;
+    }
+
+    /**
+     * ディーラーがカードを引くかを判断するメソッド
+     * @param inHands 手札のインスタンス
+     * @returns カードを引く場合はtrue
+     */
+    static repeatDarwCard(inHands: InHands): boolean {
+      if (inHands.culcNumber() < this.REPEAT_DRAW_NUMBER) {
+        return true;
+      }
+      return false;
     }
   }
 }
