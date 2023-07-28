@@ -79,30 +79,23 @@ export namespace ActionManager {
 
   /**
    * ディーラーのターン開始
-   * TODO: 次の課題(#87)で実装する
    */
-  function deelerGame() {
+  async function deelerGame() {
     // ヒットステイボタンを非表示にする
     Disp.hitStayButton(false);
 
-    // カードを開く。
+    // カードを開く
     openCardDeeler();
 
     // 17以上になるまで引く
-    repeatDrawDeeler();
+    await repeatDrawDeeler();
   }
 
   /**
    * ディーラーのカードを表にするメソッド
    */
   function openCardDeeler() {
-    const cards = deelerInHands.getCards();
-    cards.forEach((card) => {
-      if (card.visible) {
-        return;
-      }
-      card.visible = true;
-    });
+    deelerInHands.openCards();
     displayDeeler();
   }
 
@@ -110,7 +103,7 @@ export namespace ActionManager {
    * ディーラーが17以上になるまで引き続けるメソッド
    */
   async function repeatDrawDeeler() {
-    const draw = Game.MainLogic.repeatDarwCard(deelerInHands);
+    const draw = Game.MainLogic.repeatDarwDeelerCard(deelerInHands);
     if (!draw) {
       return;
     }

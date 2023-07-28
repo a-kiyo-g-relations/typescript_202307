@@ -43,7 +43,7 @@ export namespace Game {
      * @param inHands 手札のインスタンス
      * @returns カードを引く場合はtrue
      */
-    static repeatDarwCard(inHands: InHands): boolean {
+    static repeatDarwDeelerCard(inHands: InHands): boolean {
       if (inHands.culcNumber() < this.REPEAT_DRAW_NUMBER) {
         return true;
       }
