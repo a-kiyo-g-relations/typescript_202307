@@ -100,7 +100,7 @@ export namespace ActionManager {
   }
 
   /**
-   * ディーラーが17以上になるまで引き続けるメソッド
+   * ディーラーが条件を満たすまで引き続けるメソッド
    */
   async function repeatDrawDeeler() {
     const draw = Game.MainLogic.repeatDarwDeelerCard(deelerInHands);
@@ -110,7 +110,7 @@ export namespace ActionManager {
     await waitTimeDeeler();
     drawCardDeeler();
     displayDeeler();
-    repeatDrawDeeler();
+    await repeatDrawDeeler();
   }
 
   /**
