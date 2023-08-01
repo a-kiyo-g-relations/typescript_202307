@@ -4,4 +4,4 @@ import { ActionManager } from "./actionManager";
 ActionManager.initializeButton();
 
 // ゲームスタート
-ActionManager.startGame();
+await ActionManager.startGame();

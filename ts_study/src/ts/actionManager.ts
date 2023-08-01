@@ -40,7 +40,7 @@ export namespace ActionManager {
   /**
    * ゲームスタート時の初期処理
    */
-  export function startGame() {
+  export async function startGame() {
     // プレイヤーのカードを引く
     drawCardPlayer();
     drawCardPlayer();
@@ -53,20 +53,20 @@ export namespace ActionManager {
     displayDeeler();
 
     // プレイヤーのステータスを判定し後続処理に飛ばす
-    checkPlayerStatus();
+    await checkPlayerStatus();
   }
 
   /**
    * プレイヤーの手札によって処理を分岐させる
    */
-  function checkPlayerStatus() {
+  async function checkPlayerStatus() {
     const status = Game.MainLogic.judgeByCards(playerInHands);
     switch (status) {
       case Game.Status.JACK:
-        deelerGame();
+        await deelerGame();
         break;
       case Game.Status.EXACT:
-        deelerGame();
+        await deelerGame();
         break;
       case Game.Status.OVER:
         burstGame();
