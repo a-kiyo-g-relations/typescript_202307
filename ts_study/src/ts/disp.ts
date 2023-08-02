@@ -23,6 +23,8 @@ export namespace Disp {
     export const RELOAD_BUTTON = "reloadButton";
     /** ヒットボタンとステイボタンの表示エリア */
     export const HIT_STAY_BUTTON = "buttonArea";
+    /** ディーラーの考え中メッセージの表示場所 */
+    export const THINKING_TIME_MESSAGE = "thinkingTimeMessage";
   }
 
   /**
@@ -178,5 +180,18 @@ export namespace Disp {
    */
   export function alertWrapp(inHands: InHands) {
     alert(inHands.culcNumber() + "で終了する。");
+  }
+
+  /**
+   * ディーラー考え中のメッセージ表示を切り替える
+   * @param visible 表示するならtrue
+   */
+  export function toggleThinkingmessage(visible: boolean) {
+    const messageElement = getElement(ElementId.THINKING_TIME_MESSAGE);
+    if (visible) {
+      messageElement.style.display = "block";
+    } else {
+      messageElement.style.display = "none";
+    }
   }
 }

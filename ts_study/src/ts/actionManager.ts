@@ -3,6 +3,7 @@ import { Deck } from "./deck";
 import { Disp } from "./disp";
 import { Card } from "./card";
 import { Game } from "./game";
+import { Wait } from "./wait";
 
 export namespace ActionManager {
   /** 表示されたボタンのID */
@@ -39,7 +40,7 @@ export namespace ActionManager {
   /**
    * ゲームスタート時の初期処理
    */
-  export function startGame() {
+  export async function startGame() {
     // プレイヤーのカードを引く
     drawCardPlayer();
     drawCardPlayer();
@@ -52,20 +53,20 @@ export namespace ActionManager {
     displayDeeler();
 
     // プレイヤーのステータスを判定し後続処理に飛ばす
-    checkPlayerStatus();
+    await checkPlayerStatus();
   }
 
   /**
    * プレイヤーの手札によって処理を分岐させる
    */
-  function checkPlayerStatus() {
+  async function checkPlayerStatus() {
     const status = Game.MainLogic.judgeByCards(playerInHands);
     switch (status) {
       case Game.Status.JACK:
-        deelerGame();
+        await deelerGame();
         break;
       case Game.Status.EXACT:
-        deelerGame();
+        await deelerGame();
         break;
       case Game.Status.OVER:
         burstGame();
@@ -78,11 +79,47 @@ export namespace ActionManager {
 
   /**
    * ディーラーのターン開始
-   * TODO: 次の課題(#87)で実装する
    */
-  function deelerGame() {
+  async function deelerGame() {
+    // ヒットステイボタンを非表示にする
     Disp.hitStayButton(false);
-    alert("ディーラーの処理に移る。");
+
+    // カードを開く
+    openCardDeeler();
+
+    // 17以上になるまで引く
+    await repeatDrawDeeler();
+  }
+
+  /**
+   * ディーラーのカードを表にするメソッド
+   */
+  function openCardDeeler() {
+    deelerInHands.openCards();
+    displayDeeler();
+  }
+
+  /**
+   * ディーラーが条件を満たすまで引き続けるメソッド
+   */
+  async function repeatDrawDeeler() {
+    const draw = Game.MainLogic.repeatDarwDeelerCard(deelerInHands);
+    if (!draw) {
+      return;
+    }
+    await waitTimeDeeler();
+    drawCardDeeler();
+    displayDeeler();
+    await repeatDrawDeeler();
+  }
+
+  /**
+   * ディーラーの処理を待たせる（考え中）メソッド
+   */
+  async function waitTimeDeeler() {
+    Disp.toggleThinkingmessage(true);
+    await Wait.sec(3);
+    Disp.toggleThinkingmessage(false);
   }
 
   /**

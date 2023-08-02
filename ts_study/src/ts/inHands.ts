@@ -94,4 +94,16 @@ export class InHands {
 
     return true;
   }
+
+  /**
+   * 手札を表にするメソッド
+   */
+  openCards() {
+    this.cards.forEach((card) => {
+      if (card.visible) {
+        return;
+      }
+      card.visible = true;
+    });
+  }
 }
